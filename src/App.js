@@ -39,7 +39,7 @@ class App extends Component {
     let data = new URLSearchParams();
     data.append("player", this.state.user); // data that you want to post (key,value)
     data.append("score", 3); //figure out how to get time elapsed
-    const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
+    const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   getData = async () => {
-    const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
+    const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
     let result = await fetch(url)
     let data = await result.json()
     
