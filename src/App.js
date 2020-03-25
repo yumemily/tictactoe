@@ -12,7 +12,7 @@ class App extends Component {
       nextPlayer: false, // false is x true is O
       history: [],
       user: '',
-      scores : [],
+      scores: [],
       gameOver: false,
       winner: false
     }
@@ -55,24 +55,24 @@ class App extends Component {
     const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
     let result = await fetch(url)
     let data = await result.json()
-    
+
     let scores = data.items
     console.log(scores)
-    this.setState({scores: scores})
+    this.setState({ scores: scores })
   }
 
-  componentWillMount(nextProps, nextState){
+  componentWillMount(nextProps, nextState) {
     {
       this.getData();
     }
   }
 
-  componentWillUpdate(nextProps, nextState){
-    if(this.status===true){
+  componentWillUpdate(nextProps, nextState) {
+    if (this.status === true) {
       this.getData();
       console.log(this.scores)
       // this.setState({winner: false})
-      this.setState({gameOver: true})
+      this.setState({ gameOver: true })
     }
   }
 
@@ -87,24 +87,29 @@ class App extends Component {
     });
   };
 
-  
-  render() {
-    if (!this.state.user) {
-      return (
 
+  render() {
+    // if (!this.state.user) {
+    //   return (
+
+    //     <FacebookLogin
+    //       appId="641934443292841"
+    //       autoLoad={true}
+    //       fields="name,email,picture"
+    //       callback={this.responseFacebook}
+    //     />
+    //   )
+    // }
+
+    return (
+
+      <div>
         <FacebookLogin
           appId="641934443292841"
           autoLoad={true}
           fields="name,email,picture"
           callback={this.responseFacebook}
         />
-      )
-    }
-    
-    return (
-      
-      <div>
-        
         <h2>User Info: {this.state.user} </h2>
         <ul>
           {this.state.history.map((item, idx) => {
@@ -113,12 +118,12 @@ class App extends Component {
         </ul>
         <h1>Score history</h1>
         <ol>
-          {this.state.scores.map((item) =>{
+          {this.state.scores.map((item) => {
             return (<li>{item.player} {item.score}</li>)
           })}
         </ol>
         <Board {...this.state} setParentsState={this.setParentsState} postData={this.postData} getData={this.getData} />
-      <button  onClick={() => this.reset()}>Reset</button>
+        <button onClick={() => this.reset()}>Reset</button>
       </div>
     );
   }
