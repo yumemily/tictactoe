@@ -13,8 +13,6 @@ class App extends Component {
       history: [],
       user: '',
       scores: [],
-      gameOver: false,
-      winner: false
     }
   }
 
@@ -34,11 +32,11 @@ class App extends Component {
   }
 
   // call this function when player wins
-  postData = async () => {
+  postData = async (duration) => {
     console.log('here')
     let data = new URLSearchParams();
     data.append("player", this.state.user); // data that you want to post (key,value)
-    data.append("score", 3); //figure out how to get time elapsed
+    data.append("score", duration); //figure out how to get time elapsed
     const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
     const response = await fetch(url, {
       method: "POST",
@@ -49,6 +47,7 @@ class App extends Component {
       json: true
     });
     console.log('ddd', response)
+    // this.getData();
   }
 
   getData = async () => {
@@ -82,8 +81,7 @@ class App extends Component {
       squares: ['', '', '', '', '', '', '', '', ''],
       nextPlayer: false, // false is x true is O
       history: [],
-      gameOver: false,
-      winner: false,
+
     });
   };
 

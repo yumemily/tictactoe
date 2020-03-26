@@ -1,6 +1,13 @@
 import React from 'react'
 import Square from './Square'
 
+//score logic
+// click first square starts the time
+//once there is a winner, calculate uration (Current-start time)
+// send it to parents to send data
+let startTime = 0;
+let gameOver = false;
+
 const calculateWinner = (squares) => {
     const lines = [
         [0, 1, 2],
@@ -25,6 +32,9 @@ const calculateWinner = (squares) => {
 export default class Board extends React.Component {
     
     onSquareClicked = (i) => {
+        if (startTime == 0){
+            startTime = Date.now();
+        }
         console.log('the box number', i)
         let squareList = this.props.squares.slice(); // copy the whole array into square
         if (calculateWinner(this.props.squares) || this.props.squares[i]) {
@@ -38,13 +48,18 @@ export default class Board extends React.Component {
 
     render() {
         let status = ''
+        if (gameOver){
+            status = 'game over'
+        } else{
 
         const winner = calculateWinner(this.props.squares)
         console.log(winner)
 
         if (winner) {
-            this.props.postData();
+            let duration = (Date.now() - startTime) /1000
+            this.props.postData(duration);
             status = "Winner: " + winner;
+            gameOver = true;
             // this.props.setParentsState({winner: true})
             
         }
@@ -73,5 +88,6 @@ export default class Board extends React.Component {
                 
             </div>
         )
+    }
     }
 }
